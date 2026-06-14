@@ -1,11 +1,11 @@
-import { useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { records } from "./data";
 import "./App.css";
 
 export default function App() {
   const [keyword, setKeyword] = useState("");
   const [filterDate, setFilterDate] = useState("09");
-  const [filterPage, setFilterPage] = useState(2);
+  const [filterPage, setFilterPage] = useState(1);
 
   const dates = [...new Set(records.map((r) => r.date))];
   const pages = [...new Set(records.filter((r) => r.date === filterDate).map((r) => r.page))];
@@ -16,9 +16,29 @@ export default function App() {
     return records.filter((r) => String(r.grossKg).includes(value));
   }, [keyword]);
 
-  const selected = searchResults[0] || null;
+  //const selected = searchResults[0] || null;
+
+  // const weights = records.map(weight=>weight.grossKg)
+  // const result = []
+  // const result2 = []
+  // weights.forEach(weight=>{
+  //   if(!result.includes(weight)){
+  //     result.push(weight)
+  //   }else{
+
+  //     result2.push(weight)
+
+  //   }
+
+    
+  // })
+
+  // console.log(JSON.stringify(result2))
+
+  
 
   const tableRows = records.filter(
+  
     (r) => r.date === filterDate && r.page === Number(filterPage)
   );
 
@@ -52,35 +72,44 @@ export default function App() {
           </div>
         </section>
 
-        {selected && (
+        {searchResults&&searchResults[0] && (
           <section className="card result-card">
             <div className="result-head">
               <h2>查询结果</h2>
               <span>匹配到 {searchResults.length} 条记录</span>
             </div>
 
-            <div className="source">
-              {selected.date}号 · 第{selected.page}页
-            </div>
+         
 
-            <div className="result-grid">
-              <Info label="毛重（kg）" value={selected.grossKg} green />
-              <Info label="皮重（kg）" value={selected.tareKg} />
-              <Info label="净重（kg）" value={selected.netKg} />
-              <Info label="单价（元/斤）" value={selected.pricePerJin} />
-              <Info label="净重（斤）" value={selected.netJin} />
-              <Info label="总价（元）" value={selected.total} red />
-            </div>
-
-            <div className="meta">
+            {searchResults.map(selected=>(
+              <React.Fragment>
+                 <div className="source">
+                 {selected.date}号 · 第{selected.page}页
+               </div>
+                <div className="result-grid">
+                <Info label="毛重（kg）" value={selected.grossKg} green />
+                <Info label="皮重（kg）" value={selected.tareKg} />
+                <Info label="净重（kg）" value={selected.netKg} />
+                <Info label="单价（元/斤）" value={selected.pricePerJin} />
+                <Info label="净重（斤）" value={selected.netJin} />
+                <Info label="总价（元）" value={selected.total} red />
+              </div>
+              <div className="meta">
               <span>日期：{selected.date}号</span>
               <span>页数：第{selected.page}页</span>
               <span>ID：{selected.id}</span>
             </div>
+              </React.Fragment>
+
+            ))}
+
+          
+
+       
           </section>
         )}
 
-        {keyword && !selected && <div className="empty">没有找到这个毛重</div>}
+        {keyword && !searchResults[0] && <div className="empty">没有找到这个毛重</div>}
 
         <section className="card table-card">
           <div className="table-top">
