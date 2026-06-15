@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/weight-book/static/css/main.a2fe6a1c.css",
-    "main.js": "/weight-book/static/js/main.c8989ff5.js",
+    "main.js": "/weight-book/static/js/main.abd94e9c.js",
     "index.html": "/weight-book/index.html",
     "main.a2fe6a1c.css.map": "/weight-book/static/css/main.a2fe6a1c.css.map",
-    "main.c8989ff5.js.map": "/weight-book/static/js/main.c8989ff5.js.map"
+    "main.abd94e9c.js.map": "/weight-book/static/js/main.abd94e9c.js.map"
   },
   "entrypoints": [
     "static/css/main.a2fe6a1c.css",
-    "static/js/main.c8989ff5.js"
+    "static/js/main.abd94e9c.js"
   ]
 }
